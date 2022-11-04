@@ -1,0 +1,106 @@
+<button *ngIf="userRole === 'CITIZEN' && !identity" (click)="createFormActivation()">Create your identity</button>
+<div *ngIf="isCreateFromActive">
+    <form [formGroup]="createIdentityForm" (ngSubmit)="createCitizenIdentityController()">
+        <input type="text" formControlName="firstName" required placeholder="first name">
+        <input type="text" formControlName="lastName" required placeholder="last name">
+        <input type="text" formControlName="father" required placeholder="father's name">
+        <input type="text" formControlName="mother" required placeholder="mother's name">
+        <select name="" id="" formControlName="gender">
+
+            <option value="" selected>select gender</option>
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+        </select>
+
+        <select name="" id="" formControlName="occupation">
+            <option value="" selected>select occupation</option>
+            <option value="STUDENT">STUDENT</option>
+            <option value="EMPLOYEE">EMPLOYEE</option>
+        </select>
+        <input type="text" formControlName="address" required placeholder="address">
+        <input type="text" formControlName="birth" required placeholder="birth">
+        <input *ngIf="identity?.identity !== '' || userRole === 'ADMIN'" type="text" formControlName="identity" readonly >
+        <input type="text" formControlNam="status" readonly value="DEACTIVATED">
+        <button type="submit" [disabled]="!createIdentityForm.valid">submit your application</button>
+    </form>
+</div>
+
+
+<!-- ? UPDATING FORM -->
+
+
+<!-- <button *ngIf="userRole === 'ADMIN'" (click)="createFormActivation()">Create your identity</button> -->
+<div *ngIf="isUpdateFromActive" >
+    <form [formGroup]="updateIdentityForm" (ngSubmit)="updateIdentityController(identity?._id+'')">
+        <input type="text" formControlName="firstName" required placeholder="first name">
+        <input type="text" formControlName="lastName" required placeholder="last name">
+        <input type="text" formControlName="father" required placeholder="father's name">
+        <input type="text" formControlName="mother" required placeholder="mother's name">
+        <select name="" id="" formControlName="gender">
+
+            <option value="" selected>select gender</option>
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+        </select>
+
+        
+        <input type="text" formControlName="address" required placeholder="address">
+        <input type="text" formControlName="birth" required placeholder="birth">
+        <input *ngIf="identity?.identity !== '' || userRole === 'ADMIN'" type="text" formControlName="identity" readonly >
+        <select  formControlName="status" >
+
+            <option disabled="true" value="{{identity?.status}}" selected>{{identity?.status}}</option>
+            <option *ngIf="userRole === 'ADMIN'" value="ACTIVATED">ACTIVATE</option>
+            
+        </select>
+        
+        <select formControlName="occupation" >
+            <option disabled="true" value="{{identity?.occupation}}" selected>{{identity?.occupation}}</option>
+            <option *ngIf="userRole === 'CITIZEN'" value="STUDENT">STUDENT</option>
+            <option *ngIf="userRole === 'CITIZEN'" value="EMPLOYEE">EMPLOYEE</option>
+        </select>
+
+        <button type="submit" [disabled]="!updateIdentityForm.valid">submit your application</button>
+    </form>
+</div>
+
+
+<div *ngIf="userRole === 'CITIZEN'">
+    <p> {{identity?.status}} </p> <span *ngIf="userRole==='CITIZEN' && identity?.status === 'DEACTIVATED'"
+        style="color: red;">identity still not confirmed</span>
+    <p>{{identity?.identity}} </p>
+    <p>{{identity?.firstName}} {{identity?.father}} {{identity?.lastName}}</p>
+    <p>{{identity?.birth}} {{identity?.address}}</p>
+    <p>{{identity?.mother}} {{identity?.lastName}}</p>
+    <p>{{identity?.occupation}}</p>
+    <button *ngIf="userRole === 'CITIZEN'" (click)="updateFormActivation(identity?._id)">update info</button>
+</div>
+
+<!-- <div>
+    <form [formGroup]="updateIdentityForm" ></form>
+</div> -->
+<div *ngIf=" userRole === 'ADMIN'">
+    <table>
+        <tr>
+            <th>identity</th>
+            <th>first name</th>
+            <th>last name</th>
+            <th>occupation</th>
+            <th>father's name</th>
+            <th>mother's name</th>
+            <th>Action</th>
+        </tr>
+        <tr *ngFor="let item of identities">
+            <td> {{item.identity}} </td>
+            <td> {{item.firstName}} </td>
+            <td> {{item.lastName}} </td>
+            <td> {{item.occupation}} </td>
+            <td> {{item.father}} </td>
+            <td> {{item.mother}} </td>
+            <td> 
+                <button *ngIf="item.identity === '' || item.status !== 'ACTIVATED'" (click)="updateFormActivation(item._id)">update</button>
+                 <button>More info</button>
+            </td>
+        </tr>
+    </table>
+</div>

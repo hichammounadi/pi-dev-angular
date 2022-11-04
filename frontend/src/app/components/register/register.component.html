@@ -1,0 +1,14 @@
+<form [formGroup]="registerForm" (ngSubmit)="registerUserController()">
+    <input type="text" formControlName="fullname" required>
+    <input type="email" formControlName="email" required>
+    
+    <input type="password" formControlName="password" required>
+    <button type="submit" [disabled]="!registerForm">Register</button>
+</form>
+<hr>
+<div *ngIf="errorMsg">
+    {{errorMsg}}
+</div>
+<div *ngIf="!successMsg">
+    {{successMsg}}
+</div>
