@@ -16,6 +16,7 @@ const invoiceRouter = require('./steg-soned/ssRoutes')
 const userRouter = require('./user/userRoutes')
 const cinRouter = require('./cin/cinRoutes')
 const creditCardRouter = require('./credit-card/creditRoutes')
+const bulletinRouter = require('./bulletin3/bulletinRoutes')
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
@@ -30,6 +31,7 @@ app.use('/api/v1/invoice', invoiceRouter)
 app.use('/api/v1/auth', userRouter)
 app.use('/api/v1/identity', cinRouter)
 app.use('/api/v1/credit-card', creditCardRouter)
+app.use('/api/v1/bulletin', bulletinRouter)
 
 
 

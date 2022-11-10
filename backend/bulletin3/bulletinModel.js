@@ -20,16 +20,28 @@ const BulletinTroisSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    fatherName: {
+    father: {
         type: String,
         required: true
     },
-    motherName:{
+    mother:{
         type:String,
         required: true
     },
     identity: {
         type:String,
+        required: true
+    },
+    occupation: {
+        type:String,
+        required: true
+    },
+    birth: {
+        type: String,
+        required: true
+    },
+    birth: {
+        type: String,
         required: true
     },
     status: {

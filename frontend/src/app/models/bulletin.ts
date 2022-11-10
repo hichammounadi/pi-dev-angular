@@ -1,12 +1,15 @@
 import { User } from "./user";
 
 export interface Bulletin {
-    name?: String,
+    _id?: string,
+    name?: string,
     user?: User,
-    firstName?: String,
-    lastName?: String,
-    fatherName?: String,
-    motherName?: String,
-    identity?: String,
+    firstName?: string,
+    lastName?: string,
+    father?: string,
+    mother?: string,
+    identity?: string,
+    birth?: string,
+    occupation?:string,
     status?:string
 }

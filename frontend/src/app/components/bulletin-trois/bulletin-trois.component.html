@@ -1,1 +1,59 @@
-<p>bulletin-trois works!</p>
+<table *ngIf="userRole === 'ADMIN'">
+    <thead>
+        <th>name</th>
+        <th>first name</th>
+        <th>last name</th>
+        <th>father name</th>
+        <th>mother name</th>
+        <th>identity </th>
+        <th>status</th>
+        <th>action </th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let bulletin of bulletins">
+            <td> {{bulletin.name}} </td>
+            <td> {{bulletin.firstName}} </td>
+            <td> {{bulletin.lastName}} </td>
+            <td> {{bulletin.father}} </td>
+            <td> {{ bulletin.mother }} </td>
+            <td> {{ bulletin.identity }} </td>
+            <td>
+                <select name="" id="">
+                    <option selected disabled value="{{bulletin.status}}"> ACTIVATED </option>
+                </select>
+                <select *ngIf="bulletin.status !== 'ACTIVATED'" formControlName="status">
+                    <option disabled="true" selected >{{bulletin.status}}</option>
+                    <option value="ACTIVATED">ACTIVATED</option>
+                </select>
+            </td>
+            <td>
+                <p *ngIf="bulletin.status === 'ACTIVATED'">B-3 active</p>
+                <button (click)="updateBulletinTroisController(bulletin._id+'', bulletin.status+'')" *ngIf="bulletin.status !== 'ACTIVATED'">activate</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- ! ACTIVATE the create form -->
+<button *ngIf="userRole === 'CITIZEN' && bulletin?.status !== 'ACTIVATED'" (click)="createFormActivation()">Apply for a bulletin-3</button>
+<span *ngIf="identity?.status !== 'ACTIVATED'"> {{errorMsg}} </span>
+<form [formGroup]="createBulltinForm" (ngSubmit)="createBulletinTroisController()" *ngIf="isCreateFormActive">
+    <input type="text" placeholder="first name" readonly formControlName="firstName">
+    <input type="text" placeholder="last name" readonly formControlName="lastName" >
+    <input type="text" placeholder="father name" readonly formControlName="father">
+    <input type="text" placeholder="mother name" readonly formControlName="mother">
+    <input type="text" placeholder="occupation" readonly formControlName="occupation">
+    <input type="text" placeholder="birth" readonly formControlName="birth">
+    <input type="text" placeholder="identity" readonly formControlName="identity">
+    <button type="submit">Apply</button>
+</form>
+<div *ngIf="bulletin?.status == 'ACTIVATED' && userRole=='CITIZEN'">
+    <p> <span>first name : </span> {{bulletin?.firstName}}</p>
+    <p> <span>last name : </span> {{bulletin?.lastName}}</p>
+    <p> <span>father name :</span> {{bulletin?.father}}</p>
+    <p> <span> mother name :</span> {{bulletin?.mother}}</p>
+    <p> <span> identity :</span> {{bulletin?.identity}}</p>
+    <p style="background-color: cyan ;"> <span> status :</span> {{bulletin?.status}}</p>
+    <!-- ? prolly if we need to get a preview -->
+    <!-- <button></button> -->
+</div>
